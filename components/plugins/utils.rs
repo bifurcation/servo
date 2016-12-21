@@ -23,8 +23,12 @@ pub fn match_ty_unwrap<'a>(ty: &'a ast::Ty, segments: &[&str]) -> Option<&'a [P<
             // which will compare them in reverse until one of them runs out of segments
             if seg.iter().rev().zip(segments.iter().rev()).all(|(a, b)| &*a.identifier.name.as_str() == *b) {
                 match seg.last() {
-                    Some(&ast::PathSegment { parameters: ast::PathParameters::AngleBracketed(ref a), .. }) => {
-                        Some(&a.types)
+                    Some(&ast::PathSegment { parameters: Some(ref params), .. }) => {
+                        if let ast::PathParameters::AngleBracketed(ref a) = **params {
+                            Some(&a.types)
+                        } else {
+                            None
+                        }
                     }
                     _ => None
                 }
