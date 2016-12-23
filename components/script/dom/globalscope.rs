@@ -12,6 +12,7 @@ use dom::bindings::js::{MutNullableJS, Root};
 use dom::bindings::reflector::DomObject;
 use dom::bindings::str::DOMString;
 use dom::crypto::Crypto;
+use dom::helloworld::HelloWorld;
 use dom::dedicatedworkerglobalscope::DedicatedWorkerGlobalScope;
 use dom::errorevent::ErrorEvent;
 use dom::event::{Event, EventBubbles, EventCancelable};
@@ -51,6 +52,7 @@ use timers::{OneshotTimers, TimerCallback};
 pub struct GlobalScope {
     eventtarget: EventTarget,
     crypto: MutNullableJS<Crypto>,
+    hello: MutNullableJS<HelloWorld>,
     next_worker_id: Cell<WorkerId>,
 
     /// Pipeline id associated with this global.
@@ -106,6 +108,7 @@ impl GlobalScope {
         GlobalScope {
             eventtarget: EventTarget::new_inherited(),
             crypto: Default::default(),
+            hello: Default::default(),
             next_worker_id: Cell::new(WorkerId(0)),
             pipeline_id: pipeline_id,
             devtools_wants_updates: Default::default(),
@@ -168,6 +171,10 @@ impl GlobalScope {
 
     pub fn crypto(&self) -> Root<Crypto> {
         self.crypto.or_init(|| Crypto::new(self))
+    }
+
+    pub fn hello(&self) -> Root<HelloWorld> {
+        self.hello.or_init(|| HelloWorld::new(self))
     }
 
     /// Get next worker id.

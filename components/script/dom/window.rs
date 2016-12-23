@@ -28,6 +28,7 @@ use dom::bindings::structuredclone::StructuredCloneData;
 use dom::bindings::utils::{GlobalStaticData, WindowProxyHandler};
 use dom::browsingcontext::BrowsingContext;
 use dom::crypto::Crypto;
+use dom::helloworld::HelloWorld;
 use dom::cssstyledeclaration::{CSSModificationAccess, CSSStyleDeclaration, CSSStyleOwner};
 use dom::document::{AnimationFrameCallback, Document};
 use dom::element::Element;
@@ -469,6 +470,10 @@ impl WindowMethods for Window {
     // https://dvcs.w3.org/hg/webcrypto-api/raw-file/tip/spec/Overview.html#dfn-GlobalCrypto
     fn Crypto(&self) -> Root<Crypto> {
         self.upcast::<GlobalScope>().crypto()
+    }
+
+    fn Hello(&self) -> Root<HelloWorld> {
+        self.upcast::<GlobalScope>().hello()
     }
 
     // https://html.spec.whatwg.org/multipage/#dom-frameelement

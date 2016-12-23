@@ -289,6 +289,7 @@ pub mod formdata;
 pub mod globalscope;
 pub mod hashchangeevent;
 pub mod headers;
+pub mod helloworld;
 pub mod history;
 pub mod htmlanchorelement;
 pub mod htmlappletelement;
